@@ -1,0 +1,27 @@
+:root {
+    --orange: #ED5338;
+    --black: #000000;
+    --white: #ffffff;
+    --brown: #562211;
+    --brown-light: #C39367;
+    --black-gray: #3E3E3E;
+    --gray-background: #EAEAEA;
+    --dark-gray: #787878;
+    --gray-light: #E4DBD1;
+    --footer: #D9D9D9;
+    --footer-text: #5B5B5B;
+    --popular: #ECECEC;
+    --tag: #8692C3;
+    --tag-pink: #C88DC5;
+    --fiolet: #3D2A92;
+    --fiolet-pink: #733897;
+    --center-place: #CFB8A1;
+    --border--blue: #3746A3;
+
+    --tetra-red: #F15043;
+    --tetra-blue: #14B1AB;
+    --tetra-darkBlue: #4E89AE;
+
+    --width: 1176px;
+    --height: 466px;
+  }
