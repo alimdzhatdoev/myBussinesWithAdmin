@@ -38,7 +38,7 @@ getData("news", "", "admin")
 //Редактирование новости
 const url = new URL(window.location.href);
 const queryParams = url.searchParams;
-const id = queryParams.get("id");
+const id = queryParams.get("id"); 
 if (id) {
     getData("news", id, "admin")
         .then((response) => {
