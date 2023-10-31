@@ -348,10 +348,11 @@ export function makeData(idBlock) {
                   if (data[category][subItem].element == "textarea") {
                     //очистка редактора
 
-                    initTextEditor(`${category}_${subItem}`);
+                    // initTextEditor(`${category}_${subItem}`);
+                    let editorPromise = null;
 
-                    const editorPromise = getTextEditor();
-                    editorPromise.then(editor => {
+                    const editorPromise1 = getTextEditor();
+                    editorPromise1.then(editor => {
                       editor.setData("");
                     });
                   }
