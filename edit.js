@@ -45,10 +45,14 @@ const id = queryParams.get("id_new");
 if (id) {
     getData("news", id, "admin").then((response) => {
         $("#news_find_new .new_block__title").text(response.title);
-        $("#news_find_new .new_block__img img").attr(
-            "src",
-            `admin/img/${response.img}`
-        );
+        $("#newName").text(response.title);
+
+        for (let i = 0; i < response.img.length; i++) {
+            $("#news_find_new .new_block__img").append(`
+                <img src="admin/img/${response.img[i]}" alt="" />
+            `);
+        }
+
         $("#news_find_new .new_block__text").html(
             JSON.parse(response.text).content
         );
@@ -101,6 +105,7 @@ getData("news", "", "admin").then((response) => {
 // ---------------------------------------------------------
 
 //SLIDER
+
 $(document).ready(function () {
     getData("slider", "", "admin")
         .then((response) => {
@@ -149,5 +154,10 @@ $(document).ready(function () {
         });
 });
 
-
 //SLIDER
+
+// ---------------------------------------------------------
+
+//NEWS
+
+// ---------------------------------------------------------
