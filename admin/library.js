@@ -692,8 +692,11 @@ export function menu_tabs() {
     let blocks = $(".admin_info__elem");
     blocks.each(function () {
       if ($(this).attr("data_info") == tabName) {
-        $(this).show();
-        location.reload();
+        // $(this).show();
+        var randomParam = Math.random();
+        var currentURL = window.location.href;
+        var newURL = currentURL.split("?")[0] + "?data=" + randomParam;
+        window.location.href = newURL;
       } else {
         $(this).hide();
       }

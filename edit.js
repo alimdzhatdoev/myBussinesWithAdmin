@@ -2,7 +2,9 @@ import {
     getData
 } from "./admin/library.js";
 
-//Выгрузка всех новостей
+//NEWS
+
+//Выгрузка всех новостей в новости
 getData("news", "", "admin")
     .then((response) => {
         let block = $("#news_All").empty();
@@ -23,7 +25,7 @@ getData("news", "", "admin")
                     </div>
                     <div class="events_block__bottom___dops">
                         <div class="events_block__bottom___dops____date">${element.date}</div>
-                        <a href="new.html?id=${
+                        <a href="new.html?id_new=${
                         element.id
                         }" class="events_block__bottom___dops____readMore">
                             Читать дальше >>
@@ -38,7 +40,7 @@ getData("news", "", "admin")
 //Редактирование новости
 const url = new URL(window.location.href);
 const queryParams = url.searchParams;
-const id = queryParams.get("id"); 
+const id = queryParams.get("id_new"); 
 if (id) {
     getData("news", id, "admin")
         .then((response) => {
@@ -48,7 +50,7 @@ if (id) {
         });
 }
 
-//Выгрузка всех новостей
+//Выгрузка всех новостей на главную
 getData("news", "", "admin")
     .then((response) => {
         let block = $("#news_show_main_page").empty();
@@ -76,7 +78,7 @@ getData("news", "", "admin")
                     </div>
                     <div class="events_block__bottom___dops">
                         <div class="events_block__bottom___dops____date">${response[i].date}</div>
-                        <a href="new.html?id=${
+                        <a href="new.html?id_new=${
                             response[i].id
                         }" class="events_block__bottom___dops____readMore">
                             Читать дальше >>
@@ -87,3 +89,7 @@ getData("news", "", "admin")
             `);
         }
     });
+
+//NEWS
+
+// ---------------------------------------------------------
