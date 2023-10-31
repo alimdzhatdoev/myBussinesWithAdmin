@@ -3,7 +3,7 @@ export function schema() {
         "slider": {
             "menuName": "Слайды",
             "title": {
-                "name": "Название слайда",
+                "name": "Заголовок слайда",
                 "element": "input",
                 "type": "text",
                 "required": true
@@ -30,7 +30,7 @@ export function schema() {
         "news": {
             "menuName": "Новости",
             "title": {
-                "name": "Название новости",
+                "name": "Заголовок новости",
                 "element": "input",
                 "type": "text",
                 "required": true
@@ -49,6 +49,39 @@ export function schema() {
             },
             "img": {
                 "name": "Картинки новости",
+                "element": "input",
+                "type": "file",
+                "required": true
+            },
+        },
+        "services": {
+            "menuName": "Услуги",
+            "title": {
+                "name": "Заголовок услуги",
+                "element": "input",
+                "type": "text",
+                "required": true
+            },
+            "subtitle": {
+                "name": "Подзаголовок услуги",
+                "element": "input",
+                "type": "text",
+                "required": true
+            },
+            "text": {
+                "name": "Текст услуги",
+                "element": "textarea",
+                "type": "text",
+                "required": true
+            },
+            "tags": {
+                "name": "Теги услуги (Например: услуги, самозанятый, юл, и т.д.)",
+                "element": "input",
+                "type": "text",
+                "required": true
+            },
+            "img": {
+                "name": "Картинки услуги",
                 "element": "input",
                 "type": "file",
                 "required": true

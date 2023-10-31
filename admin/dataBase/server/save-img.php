@@ -4,7 +4,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['file'])) {
     $fileNames = array();
 
     foreach ($_FILES['file']['tmp_name'] as $key => $tmp_name) {
-        $fileRandomName = basename(uniqid('', true) . '.png');
+        $originalFileName = $_FILES['file']['name'][$key]; // Исходное имя файла
+        $fileExtension = pathinfo($originalFileName, PATHINFO_EXTENSION); // Извлечение расширения
+
+        $fileRandomName = basename(uniqid('', true) . '.' . $fileExtension);
         $uploadedFile = $uploadDir . $fileRandomName;
 
         if (move_uploaded_file($_FILES['file']['tmp_name'][$key], $uploadedFile)) {
@@ -21,4 +24,3 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['file'])) {
     echo "Неверный запрос.";
 }
 ?>
-
