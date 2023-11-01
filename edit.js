@@ -2,8 +2,6 @@ import {
     getData
 } from "./admin/library.js";
 
-//NEWS
-
 //Выгрузка всех новостей в новости
 getData("news", "", "admin").then((response) => {
     let block = $("#news_All").empty();
@@ -100,11 +98,7 @@ getData("news", "", "admin").then((response) => {
     }
 });
 
-//NEWS
-
 // ---------------------------------------------------------
-
-//SLIDER
 
 //выгрузка всех слайдов в слайдер
 $(document).ready(function () {
@@ -157,11 +151,7 @@ $(document).ready(function () {
         });
 });
 
-//SLIDER
-
 // ---------------------------------------------------------
-
-//SERVICES
 
 //Выгрузка всех услуг
 getData("services", "", "admin").then((response) => {
@@ -209,7 +199,7 @@ getData("services", "", "admin").then((response) => {
     });
 });
 
-//Редактирование новости
+//Редактирование услуги
 const url_service = new URL(window.location.href);
 const queryParams_service = url_service.searchParams;
 const id_service = queryParams_service.get("id_service");
@@ -231,6 +221,57 @@ if (id_service) {
     });
 }
 
-//SERVICES
+//Выгрузка всех услуг на главную
+getData("services", "", "admin").then((response) => {
+    let block = $("#services_show_main_page").empty();
+
+    let value = 6;
+    let length = response.length;
+
+    if (value > length) {
+        value = length;
+    }
+
+    for(let i = 0; i < value; i++) {
+        fetch(`admin/img/${response[i].img[0]}`)
+            .then(elem => elem.text())
+            .then(data => {
+                block.append(`
+                    <div class="service_block">
+                        <div class="service_block__img1">
+                            <img src="img/my-bussiness logo.png" alt="" />
+                        </div>
+                        <div class="service_block__img2">
+                            <img src="img/hoverServiceEllipce.png" alt="" />
+                        </div>
+                        <div class="service_block__main">
+                            <div class="service_block__main___top" >
+                                ${data}
+                            </div>
+                            <div class="service_block__main___bottom">
+                                <div class="service_block__main___bottom____text">
+                                ${response[i].title}
+                                </div>
+                                <a href="openService.html?id_service=${response[i].id}" class="service_block__main___bottom____button">
+                                    <svg width="66" height="64" viewBox="0 0 66 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path
+                                        d="M65 32C65 49.092 50.7023 63 33 63C15.2977 63 1 49.092 1 32C1 14.908 15.2977 1 33 1C50.7023 1 65 14.908 65 32Z"
+                                        stroke="#562211" stroke-width="2" />
+                                    <path
+                                        d="M45.7071 32.7071C46.0976 32.3166 46.0976 31.6834 45.7071 31.2929L39.3431 24.9289C38.9526 24.5384 38.3195 24.5384 37.9289 24.9289C37.5384 25.3195 37.5384 25.9526 37.9289 26.3431L43.5858 32L37.9289 37.6569C37.5384 38.0474 37.5384 38.6805 37.9289 39.0711C38.3195 39.4616 38.9526 39.4616 39.3431 39.0711L45.7071 32.7071ZM20 33L45 33L45 31L20 31L20 33Z"
+                                        fill="#562211" />
+                                    </svg>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                `)
+            })
+            .catch(error => {
+                console.error('Ошибка при загрузке SVG: ', error);
+            });
+
+    };
+});
 
 // ---------------------------------------------------------

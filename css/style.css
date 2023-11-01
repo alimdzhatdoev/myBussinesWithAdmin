@@ -570,35 +570,14 @@ header {
 
 .service_block__main___top svg {
     width: 100%;
-}
-
-.service_block__main___top svg path{
-    stroke: var(--brown);
+    fill: var(--brown);
     transition: all .3s ease-in-out;
 }
 
-.service_block__main___top svg circle{
-    stroke: var(--brown) !important;
-    transition: all .3s ease-in-out;
-}
-
-.service_block__main___top svg polyline{
-    stroke: var(--brown) !important;
-    transition: all .3s ease-in-out;
-}
-
-.service_block__main___top svg line{
-    stroke: var(--brown) !important;
-    transition: all .3s ease-in-out;
-}
-
-
-.service_block:hover .service_block__main___top svg path,
-.service_block:hover .service_block__main___top svg circle,
-.service_block:hover .service_block__main___top svg polyline,
-.service_block:hover .service_block__main___top svg line
+.service_block:hover .service_block__main___top svg 
  {
     stroke: var(--white) !important;
+    fill: var(--white)
 }
 
 
