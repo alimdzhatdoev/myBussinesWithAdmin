@@ -75,7 +75,7 @@ export function schema() {
                 "required": true
             },
             "tags": {
-                "name": "Теги услуги (Например: услуги, самозанятый, юл, и т.д.)",
+                "name": "Теги услуги",
                 "element": "input",
                 "type": "text",
                 "data": ["Услуги", "Самозанятый", "ИП"],

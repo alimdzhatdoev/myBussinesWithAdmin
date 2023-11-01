@@ -792,7 +792,7 @@ export function createMenuTabs(schema) {
             <div class="tags_admin">
               ${str}
             </div>
-            <${data[category][subItem].element} type="${data[category][subItem].type}" multiple id="${category}_${subItem}"  class="" disabled/>
+            <${data[category][subItem].element} type="${data[category][subItem].type}" multiple id="${category}_${subItem}"  class="dn_for_tags" disabled/>
           `)
 
           let allMass = [];
