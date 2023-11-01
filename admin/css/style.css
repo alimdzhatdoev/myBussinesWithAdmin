@@ -400,3 +400,35 @@ input[type="file"] {
 .admin_info__changeElem___data____img__delete:hover{
     opacity: 1;
 }
+
+.tags_admin{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.tags_admin__block{
+    border: 2px solid var(--active-item);
+    padding: 10px 15px;
+    border-radius: 20px;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--active-item);
+    transition: all .2s ease-in-out;
+    cursor: pointer;
+}
+
+.tags_admin__block:hover{
+    color: #fff;
+    background-color: var(--active-item);
+}
+
+.active_tags_admin__block{
+    color: #fff;
+    background-color: var(--active-item);
+}
+
+.dn_for_tags{
+    display: none;
+}

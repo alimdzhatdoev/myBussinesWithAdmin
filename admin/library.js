@@ -295,6 +295,9 @@ export function makeData(idBlock) {
       if (category == idBlock) {
         for (const subItem in data[category]) {
           if (subItem != "menuName") {
+            if (subItem == "tags") {
+              console.log("tag");
+            }
             if (data[category][subItem].element == "input") {
               newObject[subItem] = $(`#${category}_${subItem}`).val();
             }
@@ -777,10 +780,46 @@ export function createMenuTabs(schema) {
 
     for (const subItem in data[category]) {
       if (subItem != "menuName") {
-        $(`.admin_info__elem[data_info="${category}"] .admin_info__item___form`).append(`
-                  <label>${data[category][subItem].name}</label>
-                  <${data[category][subItem].element} type="${data[category][subItem].type}" multiple id="${category}_${subItem}"  />
-              `)
+        if (subItem == "tags") {
+          let str = "";
+
+          data[category][subItem].data.forEach(element => {
+            str += `<div class="tags_admin__block" data_tag="${element}">${element}</div>`
+          });
+
+          $(`.admin_info__elem[data_info="${category}"] .admin_info__item___form`).append(`
+            <label>${data[category][subItem].name}</label>
+            <div class="tags_admin">
+              ${str}
+            </div>
+            <${data[category][subItem].element} type="${data[category][subItem].type}" multiple id="${category}_${subItem}"  class="" disabled/>
+          `)
+
+          let allMass = [];
+          $('.admin_info__item___form').on('click', '.tags_admin__block', function () {
+            let block = $(`#${category}_${subItem}`).val();
+            let thisData = $(this).attr('data_tag');
+
+            if (allMass.includes(thisData)) {
+              $(this).removeClass('active_tags_admin__block');
+              var index = allMass.indexOf(thisData);
+              if (index !== -1) {
+                allMass.splice(index, 1);
+              }
+              $(`#${category}_${subItem}`).val(allMass.join(", "));
+            } else {
+              $(this).addClass('active_tags_admin__block');
+              allMass.push(thisData);
+              $(`#${category}_${subItem}`).val(allMass.join(", "));
+            }
+          });
+
+        } else {
+          $(`.admin_info__elem[data_info="${category}"] .admin_info__item___form`).append(`
+            <label>${data[category][subItem].name}</label>
+            <${data[category][subItem].element} type="${data[category][subItem].type}" multiple id="${category}_${subItem}"  />
+        `)
+        }
       }
     }
 
