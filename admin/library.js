@@ -284,6 +284,8 @@ export function showData(fileName) {
     });
 }
 
+let allMass = [];
+
 export function makeData(idBlock) {
   showData(idBlock)
 
@@ -295,9 +297,6 @@ export function makeData(idBlock) {
       if (category == idBlock) {
         for (const subItem in data[category]) {
           if (subItem != "menuName") {
-            if (subItem == "tags") {
-              console.log("tag");
-            }
             if (data[category][subItem].element == "input") {
               newObject[subItem] = $(`#${category}_${subItem}`).val();
             }
@@ -345,8 +344,12 @@ export function makeData(idBlock) {
             if (category == idBlock) {
               for (const subItem in data[category]) {
                 if (subItem != "menuName") {
+                  if (subItem == "tags") {
+                    $(".tags_admin__block").removeClass('active_tags_admin__block');
+                  }
                   if (data[category][subItem].element == "input") {
                     $(`#${category}_${subItem}`).val("");
+                    allMass = [];
                   }
                   if (data[category][subItem].element == "textarea") {
                     //очистка редактора
@@ -470,11 +473,58 @@ export function makeData(idBlock) {
                         <label>Добавить еще картинки</label>
                         <input type="file" multiple class="admin_info__changeElem___data____file changeBlock__${subItem}___addMore" />
                     `);
-                  } else {
-                    $(".admin_info__changeElem___data").append(`
-                        <div class="admin_info__changeElem___data____header">${data[category][subItem].name}</div>
-                        <input type="${data[category][subItem].type}" class="admin_info__changeElem___data____title changeBlock_${subItem}" value="${response[subItem]}" />
-                    `);
+                  }
+                  if (data[category][subItem].type == "text") {
+                    if (subItem == 'tags') {
+                      let str = "";
+
+                      let str_data = response[subItem].split(', ');
+
+                      data[category][subItem].data.forEach(element => {
+                        if (str_data.includes(element)) {
+                          str += `<div class="tags_admin__block active_tags_admin__block" data_tag="${element}">${element}</div>`
+                        } else {
+                          str += `<div class="tags_admin__block" data_tag="${element}">${element}</div>`
+                        }
+                      });
+
+                      $(".admin_info__changeElem___data").append(`
+                          <div class="admin_info__changeElem___data____header">${data[category][subItem].name}</div>
+                          <div class="tags_admin">
+                            ${str}
+                          </div>
+                          <input 
+                            type="${data[category][subItem].type}" 
+                            class="admin_info__changeElem___data____title changeBlock_${subItem}" 
+                            value="${response[subItem]}" />
+                      `);
+
+                      let allMass = [];
+
+                      allMass = str_data;
+
+                      $('.admin_info__changeElem___data').on('click', '.tags_admin__block', function () {
+                        let thisData = $(this).attr('data_tag');
+
+                        if (allMass.includes(thisData)) {
+                          $(this).removeClass('active_tags_admin__block');
+                          var index = allMass.indexOf(thisData);
+                          if (index !== -1) {
+                            allMass.splice(index, 1);
+                          }
+                          $(`.changeBlock_tags`).val(allMass.join(", "));
+                        } else {
+                          $(this).addClass('active_tags_admin__block');
+                          allMass.push(thisData);
+                          $(`.changeBlock_tags`).val(allMass.join(", "));
+                        }
+                      });
+                    } else {
+                      $(".admin_info__changeElem___data").append(`
+                          <div class="admin_info__changeElem___data____header">${data[category][subItem].name}</div>
+                          <input type="${data[category][subItem].type}" class="admin_info__changeElem___data____title changeBlock_${subItem}" value="${response[subItem]}" />
+                      `);
+                    }
                   }
                 }
                 if (data[category][subItem].element == "textarea") {
@@ -738,6 +788,7 @@ export function createMenuTabs(schema) {
   const menuList = $(".admin_info");
 
   for (const category in data) {
+
     menuList.append(`
           <div class="admin_info__elem" data_info="${category}">
               <div class="admin_info__item">
@@ -764,6 +815,7 @@ export function createMenuTabs(schema) {
 
     $(".admin_info__elem").on("click", `.${category}_click_name`, function () {
       $(`.${category}_click_name`).removeClass("activeTabName");
+
       let tabName = $(this).attr("dataTab");
       $(this).addClass("activeTabName");
 
@@ -792,12 +844,16 @@ export function createMenuTabs(schema) {
             <div class="tags_admin">
               ${str}
             </div>
-            <${data[category][subItem].element} type="${data[category][subItem].type}" multiple id="${category}_${subItem}"  class="dn_for_tags" disabled/>
+            <${data[category][subItem].element} 
+              type="${data[category][subItem].type}" 
+              multiple 
+              id="${category}_${subItem}" 
+              class="" 
+            />
           `)
 
-          let allMass = [];
+
           $('.admin_info__item___form').on('click', '.tags_admin__block', function () {
-            let block = $(`#${category}_${subItem}`).val();
             let thisData = $(this).attr('data_tag');
 
             if (allMass.includes(thisData)) {
@@ -813,7 +869,6 @@ export function createMenuTabs(schema) {
               $(`#${category}_${subItem}`).val(allMass.join(", "));
             }
           });
-
         } else {
           $(`.admin_info__elem[data_info="${category}"] .admin_info__item___form`).append(`
             <label>${data[category][subItem].name}</label>
@@ -826,9 +881,6 @@ export function createMenuTabs(schema) {
     $(`.admin_info__elem[data_info="${category}"] .admin_info__item___form`).append(`
           <button id="save${category}">Добавить ${data[category].menuName}</button>
     `)
-
-    //добавляется при создании редактора
-
   }
 
   let tabData = localStorage.getItem('tab_name');
