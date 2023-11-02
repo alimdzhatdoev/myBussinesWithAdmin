@@ -88,5 +88,26 @@ export function schema() {
                 "required": true
             },
         },
+        "banners": {
+            "menuName": "Баннер",
+            "title": {
+                "name": "Название баннера",
+                "element": "input",
+                "type": "text",
+                "required": true
+            },
+            "link": {
+                "name": "Ссылка для баннера",
+                "element": "input",
+                "type": "text",
+                "required": true
+            },
+            "img": {
+                "name": "Картинки баннера",
+                "element": "input",
+                "type": "file",
+                "required": true
+            },
+        },
     })
 }

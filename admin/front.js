@@ -12,8 +12,7 @@ import {
     comeBack,
     createMenuNames,
     createMenuTabs,
-    createFilesFromConfig,
-    addTextEdit
+    createFilesFromConfig
 } from './library.js';
 
 import {

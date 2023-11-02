@@ -275,3 +275,41 @@ getData("services", "", "admin").then((response) => {
 });
 
 // ---------------------------------------------------------
+
+//Выгрузка баннера на главную
+$(document).ready(function () {
+    getData("banners", "", "admin")
+        .then((response) => {
+            let slides = '';
+            response.forEach((element) => {
+                slides += `
+                    <div class="swiper-slide slider">
+                        <a href="${element.link}" target="_blank">
+                            <img src="admin/img/${element.img}" alt="" />
+                        </a>
+                    </div>
+                `;
+            });
+
+            const swiperHtml = `
+                <swiper class="mySwiper mainBanner">
+                    <div class="swiper-wrapper">
+                        ${slides}
+                    </div>
+                </swiper>
+            `;
+
+            $("#main_banner").html(swiperHtml);
+
+            if ($("#slider_all_show").length) {
+                const swiper = new Swiper('.mainBanner', {
+                    // Опциональные параметры
+                    direction: 'horizontal',
+                    loop: true,
+                    // autoplay: {
+                    //     delay: 5000,
+                    // },
+                });
+            }
+        });
+});
