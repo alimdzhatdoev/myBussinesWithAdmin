@@ -156,11 +156,28 @@ $(document).ready(function () {
 //Выгрузка всех услуг
 getData("services", "", "admin").then((response) => {
     let block = $("#service_all").empty();
+    
+    function getFileExtension(filename) {
+        return filename.slice(((filename.lastIndexOf(".") - 1) >>> 0) + 2);
+    }
 
     response.forEach((element) => {
         fetch(`admin/img/${element.img[0]}`)
-            .then(response => response.text())
+            .then(elem => {
+                let extension = getFileExtension(element.img[0]);
+                if (extension == 'svg'){
+                    return elem.text()
+                } else {
+                    return "img"
+                }
+            })
             .then(data => {
+                let imgData;
+                if (data == 'img') {
+                    imgData = `<img src='admin/img/${element.img[0]}' />`;
+                } else {
+                    imgData = data;
+                }
                 block.append(`
                     <div class="service_block">
                         <div class="service_block__img1">
@@ -171,7 +188,7 @@ getData("services", "", "admin").then((response) => {
                         </div>
                         <div class="service_block__main">
                             <div class="service_block__main___top" >
-                                ${data}
+                                ${imgData}
                             </div>
                             <div class="service_block__main___bottom">
                                 <div class="service_block__main___bottom____text">
@@ -232,10 +249,27 @@ getData("services", "", "admin").then((response) => {
         value = length;
     }
 
+    function getFileExtension(filename) {
+        return filename.slice(((filename.lastIndexOf(".") - 1) >>> 0) + 2);
+    }
+
     for(let i = 0; i < value; i++) {
         fetch(`admin/img/${response[i].img[0]}`)
-            .then(elem => elem.text())
+            .then(elem => {
+                let extension = getFileExtension(response[i].img[0]);
+                if (extension == 'svg'){
+                    return elem.text()
+                } else {
+                    return "img"
+                }
+            })
             .then(data => {
+                let imgData;
+                if (data == 'img') {
+                    imgData = `<img src='admin/img/${response[i].img[0]}' />`;
+                } else {
+                    imgData = data;
+                }
                 block.append(`
                     <div class="service_block">
                         <div class="service_block__img1">
@@ -246,7 +280,7 @@ getData("services", "", "admin").then((response) => {
                         </div>
                         <div class="service_block__main">
                             <div class="service_block__main___top" >
-                                ${data}
+                                ${imgData}
                             </div>
                             <div class="service_block__main___bottom">
                                 <div class="service_block__main___bottom____text">
@@ -306,10 +340,87 @@ $(document).ready(function () {
                     // Опциональные параметры
                     direction: 'horizontal',
                     loop: true,
-                    // autoplay: {
-                    //     delay: 5000,
-                    // },
+                    autoplay: {
+                        delay: 5000,
+                    },
                 });
             }
         });
+});
+
+// ---------------------------------------------------------
+
+//Выгрузка всех новостей в новости
+getData("videoblog", "", "admin").then((response) => {
+    let block = $("#video_All").empty();
+
+    response.forEach((element) => {
+        block.append(`
+            <div class="video_videos__block">
+                <div class="video_videos__block___img">
+                    <iframe 
+                        width="100%" 
+                        height="100%" 
+                        src="${element.link}" 
+                        title="YouTube video player" 
+                        frameborder="0" 
+                        allow="accelerometer; 
+                        autoplay; 
+                        clipboard-write; 
+                        encrypted-media; 
+                        gyroscope; 
+                        picture-in-picture; 
+                        web-share" 
+                        allowfullscreen
+                    >
+                    </iframe>
+                </div>
+                <div class="video_videos__block___date">${element.date}</div>
+                <div class="video_videos__block___text">
+                    ${element.title}
+                </div>
+            </div>
+        `);
+    });
+});
+
+//Выгрузка всех видеоблоков на главную
+getData("videoblog", "", "admin").then((response) => {
+    let block = $("#show_videos_main").empty();
+
+    let value = 6;
+    let length = response.length;
+
+    if (value > length) {
+        value = length;
+    }
+
+    for (let i = 0; i < value; i++) {
+        block.append(`
+            <div class="video_videos__block">
+                <div class="video_videos__block___img">
+                    <iframe 
+                        width="100%" 
+                        height="100%" 
+                        src="${response[i].link}" 
+                        title="YouTube video player" 
+                        frameborder="0" 
+                        allow="accelerometer; 
+                        autoplay; 
+                        clipboard-write; 
+                        encrypted-media; 
+                        gyroscope; 
+                        picture-in-picture; 
+                        web-share" 
+                        allowfullscreen
+                    >
+                    </iframe>
+                </div>
+                <div class="video_videos__block___date">${response[i].date}</div>
+                <div class="video_videos__block___text">
+                    ${response[i].title}
+                </div>
+            </div>
+        `);
+    }
 });

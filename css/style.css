@@ -366,9 +366,9 @@ header {
     width: var(--width);
     margin-top: 40px;
     display: flex;
-    justify-content: space-between;
+    /* justify-content: space-between; */
     flex-wrap: wrap;
-    gap: 40px;
+    gap: 41px;
 }
 
 .events_block {
@@ -630,9 +630,9 @@ header {
     width: var(--width);
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-between;
+    /* justify-content: space-between; */
     margin-top: 30px;
-    gap: 40px;
+    gap: 41px;
 }
 
 .video_videos__block {
@@ -663,6 +663,7 @@ header {
 
 .video_videos__block___img {
     width: 100%;
+    height: 200px;
 }
 
 .video_videos__block___img img {

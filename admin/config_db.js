@@ -130,7 +130,7 @@ export function schema() {
                 "required": true
             },
             "img": {
-                "name": "Картинки Видеоблога",
+                "name": "Картинки Видеоблога (Если не загрузится видео, замена превью)",
                 "element": "input",
                 "type": "file",
                 "required": true
