@@ -556,6 +556,19 @@ export function makeData(idBlock) {
           }
         }
 
+
+        $('.changeBlock_block_1').on('change', function(){
+          let data1 = $(this).val();
+          let data2 = $('.changeBlock_block_2').val();
+          $('.changeBlock_block_3').val(+data1 + +data2);
+        });
+  
+        $('.changeBlock_block_2').on('change', function(){
+          let data1 = $(this).val();
+          let data2 = $('changeBlock_block_1').val();
+          $('.changeBlock_block_3').val(+data1 + +data2);
+        });
+
         $(".admin_info__changeElem___data").append(
           `<button class="admin_info__changeElem___data____btn ${idBlock}_change_btn" ${idBlock}_change_id="${id}">Сохранить изменения</button>`
         );
@@ -884,6 +897,19 @@ export function createMenuTabs(schema) {
         `)
         }
       }
+
+
+      $('#map_block_1').on('change', function(){
+        let data1 = $(this).val();
+        let data2 = $('#map_block_2').val();
+        $('#map_block_3').val(+data1 + +data2);
+      });
+
+      $('#map_block_2').on('change', function(){
+        let data1 = $(this).val();
+        let data2 = $('#map_block_1').val();
+        $('#map_block_3').val(+data1 + +data2);
+      });
     }
 
     $(`.admin_info__elem[data_info="${category}"] .admin_info__item___form`).append(`

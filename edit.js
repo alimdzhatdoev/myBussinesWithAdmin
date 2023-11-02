@@ -156,7 +156,7 @@ $(document).ready(function () {
 //Выгрузка всех услуг
 getData("services", "", "admin").then((response) => {
     let block = $("#service_all").empty();
-    
+
     function getFileExtension(filename) {
         return filename.slice(((filename.lastIndexOf(".") - 1) >>> 0) + 2);
     }
@@ -165,7 +165,7 @@ getData("services", "", "admin").then((response) => {
         fetch(`admin/img/${element.img[0]}`)
             .then(elem => {
                 let extension = getFileExtension(element.img[0]);
-                if (extension == 'svg'){
+                if (extension == 'svg') {
                     return elem.text()
                 } else {
                     return "img"
@@ -253,11 +253,11 @@ getData("services", "", "admin").then((response) => {
         return filename.slice(((filename.lastIndexOf(".") - 1) >>> 0) + 2);
     }
 
-    for(let i = 0; i < value; i++) {
+    for (let i = 0; i < value; i++) {
         fetch(`admin/img/${response[i].img[0]}`)
             .then(elem => {
                 let extension = getFileExtension(response[i].img[0]);
-                if (extension == 'svg'){
+                if (extension == 'svg') {
                     return elem.text()
                 } else {
                     return "img"
@@ -350,7 +350,7 @@ $(document).ready(function () {
 
 // ---------------------------------------------------------
 
-//Выгрузка всех новостей в новости
+//Выгрузка всех видеоблоков в видеоблоки
 getData("videoblog", "", "admin").then((response) => {
     let block = $("#video_All").empty();
 
@@ -403,15 +403,6 @@ getData("videoblog", "", "admin").then((response) => {
                         width="100%" 
                         height="100%" 
                         src="${response[i].link}" 
-                        title="YouTube video player" 
-                        frameborder="0" 
-                        allow="accelerometer; 
-                        autoplay; 
-                        clipboard-write; 
-                        encrypted-media; 
-                        gyroscope; 
-                        picture-in-picture; 
-                        web-share" 
                         allowfullscreen
                     >
                     </iframe>
@@ -424,3 +415,89 @@ getData("videoblog", "", "admin").then((response) => {
         `);
     }
 });
+
+// ---------------------------------------------------------
+
+
+//Выгрузка всех районов на главную
+// for (let i = 0; i <= 13; i++) {
+//     showBlockInfoAndColor(`block_${i}`, i);
+// }
+
+
+getData("map", "", "admin").then((response) => {
+    let all_IP = 0; 
+    let all_UL = 0;
+    let all_SMSP = 0;
+
+    let all_IP_not_city = 0; 
+    let all_UL_not_city = 0;
+    let all_SMSP_not_city = 0;
+
+    let all_samozanyatiy = 0;
+
+
+    response.forEach((element) => {
+        if (element.title != 'Самозанятые'){
+            all_IP += +element.block_1;
+            all_UL += +element.block_2;
+            all_SMSP += +element.block_3;
+            showBlockInfoAndColor(element.title, element);
+        }
+        if (element.title != 'г. Черкесск' && element.title!= 'Самозанятые') {
+            all_IP_not_city += +element.block_1;
+            all_UL_not_city += +element.block_2;
+            all_SMSP_not_city += +element.block_3;
+        }
+        if (element.title == 'Самозанятые'){
+            all_samozanyatiy += +element.block_3;
+        }
+
+    });
+
+    $('#all_IP').text(all_IP);
+    $('#all_UL').text(all_UL);
+    $('#all_SMSP').text(all_SMSP);
+    $('#all_IP_not_city').text(all_IP_not_city);
+    $('#all_UL_not_city').text(all_UL_not_city);
+    $('#all_SMSP_not_city').text(all_SMSP_not_city);
+    $('#all_samozanyatiy').text(all_samozanyatiy);
+
+});
+
+function showBlockInfoAndColor(idBlock, data) {
+    let draggable = document.getElementById(idBlock);
+    let moveBlockMain = document.getElementById('moveBlockMain');
+    let openBlock = document.getElementById('openBlock');
+
+
+    draggable.onmousemove = function (event) {
+        let mouseX = event.clientX - moveBlockMain.getBoundingClientRect().left - 210;
+        let mouseY = event.clientY - moveBlockMain.getBoundingClientRect().top - 165;
+
+        $(".fil0").removeClass('showColorBlock');
+        $(this).addClass('showColorBlock');
+
+        $(".info_block__showMouse___data____data___title").text($(this).attr('data_name'))
+
+        $(".ip_block").text(data.block_1)
+        $(".ul_block").text(data.block_2)
+        $(".smsp_block").text(data.block_3)
+
+        $(".info_block__showMouse").show()
+        $(".info_block__showMouse").css({
+            "left": mouseX + "px",
+            "top": mouseY + "px",
+            "z-index": "9999"
+        })
+    };
+
+    openBlock.onmouseenter = function (event) {
+        $(".info_block__showMouse").show();
+    };
+
+    draggable.onmouseleave = function () {
+        $(".info_block__showMouse").hide()
+        $(".fil0").removeClass('showColorBlock');
+    }
+}

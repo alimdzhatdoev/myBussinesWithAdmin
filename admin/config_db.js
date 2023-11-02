@@ -136,5 +136,38 @@ export function schema() {
                 "required": true
             },
         },
+        "map": {
+            "menuName": "Карта СМСП",
+            "title": {
+                "name": "Название района",
+                "element": "input",
+                "type": "text",
+                "required": true
+            },
+            'block_1': {
+                "name": "ИП",
+                "element": "input",
+                "type": "text",
+                "required": true
+            },
+            'block_2': {
+                "name": "ЮЛ",
+                "element": "input",
+                "type": "text",
+                "required": true
+            },
+            'block_3': {
+                "name": "Всего СМСП",
+                "element": "input",
+                "type": "text",
+                "required": true
+            },          
+            "img": {
+                "name": "Герб района",
+                "element": "input",
+                "type": "file",
+                "required": true
+            }
+        }
     })
 }
