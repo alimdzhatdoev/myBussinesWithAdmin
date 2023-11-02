@@ -471,9 +471,9 @@ export function makeData(idBlock) {
                         ${showImgChange(response, data[category][subItem].type, subItem)}   
                         
                         <label>Добавить еще картинки</label>
-                        <input type="file" multiple class="admin_info__changeElem___data____file changeBlock__${subItem}___addMore" />
+                        <input type="${data[category][subItem].type}" multiple class="admin_info__changeElem___data____file changeBlock__${subItem}___addMore" />
                     `);
-                  }
+                  } else
                   if (data[category][subItem].type == "text") {
                     if (subItem == 'tags') {
                       let str = "";
@@ -525,6 +525,12 @@ export function makeData(idBlock) {
                           <input type="${data[category][subItem].type}" class="admin_info__changeElem___data____title changeBlock_${subItem}" value="${response[subItem]}" />
                       `);
                     }
+                  } else {
+                    $(".admin_info__changeElem___data").append(`
+                      <div class="admin_info__changeElem___data____header ">${data[category][subItem].name}</div>
+                      <input type="${data[category][subItem].type}" class="admin_info__changeElem___data____title changeBlock_${subItem}" 
+                      value="${response.date}"/>
+                    `);
                   }
                 }
                 if (data[category][subItem].element == "textarea") {
@@ -549,6 +555,7 @@ export function makeData(idBlock) {
             }
           }
         }
+
         $(".admin_info__changeElem___data").append(
           `<button class="admin_info__changeElem___data____btn ${idBlock}_change_btn" ${idBlock}_change_id="${id}">Сохранить изменения</button>`
         );
@@ -563,6 +570,7 @@ export function makeData(idBlock) {
     $(".downloadBlock").css("display", "flex");
     let filesToSave = [];
     let filesToDel = [];
+
 
     let inputs = $(".admin_info__changeElem___data____file");
 

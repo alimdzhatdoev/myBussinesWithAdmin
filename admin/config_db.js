@@ -109,5 +109,32 @@ export function schema() {
                 "required": true
             },
         },
+        "videoblog": {
+            "menuName": "Видеоблог",
+            "title": {
+                "name": "Название Видеоблога",
+                "element": "input",
+                "type": "text",
+                "required": true
+            },
+            "link": {
+                "name": "Ссылка для Видеоблога",
+                "element": "input",
+                "type": "text",
+                "required": true
+            },
+            "date": {
+                "name": "Дата загрузки Видеоблога",
+                "element": "input",
+                "type": "date",
+                "required": true
+            },
+            "img": {
+                "name": "Картинки Видеоблога",
+                "element": "input",
+                "type": "file",
+                "required": true
+            },
+        },
     })
 }
