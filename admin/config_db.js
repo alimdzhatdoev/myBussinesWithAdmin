@@ -79,6 +79,7 @@ export function schema() {
                 "element": "input",
                 "type": "text",
                 "data": ["Услуги", "Самозанятый", "ИП"],
+                "selectOne": false,
                 "required": true
             },
             "img": {
@@ -168,6 +169,55 @@ export function schema() {
                 "type": "file",
                 "required": true
             }
-        }
+        },
+        "supports": {
+            "menuName": "Меры поддержки",
+            "title": {
+                "name": "Заголовок меры поддержки",
+                "element": "input",
+                "type": "text",
+                "required": true
+            },
+            "subtitle": {
+                "name": "Подзаголовок меры поддержки",
+                "element": "input",
+                "type": "text",
+                "required": true
+            },
+            "text": {
+                "name": "Текст меры поддержки",
+                "element": "textarea",
+                "type": "text",
+                "required": true
+            },
+            "tags": {
+                "name": "Теги меры поддержки",
+                "element": "input",
+                "type": "text",
+                "data": ["Региональная мера поддержки", "Федеральная мера поддержки"],
+                "selectOne": true,
+                "required": true
+            },
+            'popular': {
+                "name": "Популярная мера поддержки",
+                "element": "input",
+                "type": "text",
+                "data": ["Да", "Нет"],
+                "selectOne": true,
+                "required": true
+            },
+            "date": {
+                "name": "Дата загрузки меры поддержки",
+                "element": "input",
+                "type": "date",
+                "required": true
+            },
+            "img": {
+                "name": "Картинки меры поддержки",
+                "element": "input",
+                "type": "file",
+                "required": true
+            },
+        },
     })
 }

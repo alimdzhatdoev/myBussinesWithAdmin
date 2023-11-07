@@ -797,14 +797,13 @@ header {
 
 .new_block__img {
     width: 100%;
-    overflow: hidden;
-    height: 300px;
     display: flex;
+    flex-wrap: wrap;
     gap: 10px;
 }
 
 .new_block__img img {
-    height: 100%;
+    height: 200px;
     border-radius: 10px;
 }
 

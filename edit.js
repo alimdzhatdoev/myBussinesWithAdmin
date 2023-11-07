@@ -418,51 +418,45 @@ getData("videoblog", "", "admin").then((response) => {
 
 // ---------------------------------------------------------
 
-
 //Выгрузка всех районов на главную
-// for (let i = 0; i <= 13; i++) {
-//     showBlockInfoAndColor(`block_${i}`, i);
-// }
-
-
 getData("map", "", "admin").then((response) => {
-    let all_IP = 0; 
+    let all_IP = 0;
     let all_UL = 0;
     let all_SMSP = 0;
 
-    let all_IP_not_city = 0; 
+    let all_IP_not_city = 0;
     let all_UL_not_city = 0;
     let all_SMSP_not_city = 0;
 
     let all_samozanyatiy = 0;
 
+    if ($("#moveBlockMain").length) {
+        response.forEach((element) => {
+            if (element.title != 'Самозанятые') {
+                all_IP += +element.block_1;
+                all_UL += +element.block_2;
+                all_SMSP += +element.block_3;
+                showBlockInfoAndColor(element.title, element);
+            }
+            if (element.title != 'г. Черкесск' && element.title != 'Самозанятые') {
+                all_IP_not_city += +element.block_1;
+                all_UL_not_city += +element.block_2;
+                all_SMSP_not_city += +element.block_3;
+            }
+            if (element.title == 'Самозанятые') {
+                all_samozanyatiy += +element.block_3;
+            }
 
-    response.forEach((element) => {
-        if (element.title != 'Самозанятые'){
-            all_IP += +element.block_1;
-            all_UL += +element.block_2;
-            all_SMSP += +element.block_3;
-            showBlockInfoAndColor(element.title, element);
-        }
-        if (element.title != 'г. Черкесск' && element.title!= 'Самозанятые') {
-            all_IP_not_city += +element.block_1;
-            all_UL_not_city += +element.block_2;
-            all_SMSP_not_city += +element.block_3;
-        }
-        if (element.title == 'Самозанятые'){
-            all_samozanyatiy += +element.block_3;
-        }
+        });
 
-    });
-
-    $('#all_IP').text(all_IP);
-    $('#all_UL').text(all_UL);
-    $('#all_SMSP').text(all_SMSP);
-    $('#all_IP_not_city').text(all_IP_not_city);
-    $('#all_UL_not_city').text(all_UL_not_city);
-    $('#all_SMSP_not_city').text(all_SMSP_not_city);
-    $('#all_samozanyatiy').text(all_samozanyatiy);
-
+        $('#all_IP').text(all_IP);
+        $('#all_UL').text(all_UL);
+        $('#all_SMSP').text(all_SMSP);
+        $('#all_IP_not_city').text(all_IP_not_city);
+        $('#all_UL_not_city').text(all_UL_not_city);
+        $('#all_SMSP_not_city').text(all_SMSP_not_city);
+        $('#all_samozanyatiy').text(all_samozanyatiy);
+    }
 });
 
 function showBlockInfoAndColor(idBlock, data) {
@@ -500,4 +494,123 @@ function showBlockInfoAndColor(idBlock, data) {
         $(".info_block__showMouse").hide()
         $(".fil0").removeClass('showColorBlock');
     }
+}
+
+// ---------------------------------------------------------
+
+//Выгрузка всех мер поддержки 
+
+function showSupports(tag, blockName, response) {
+    let block = $(`.${blockName}`).empty();
+
+    response.forEach((element) => {
+        if (element.tags == tag) {
+            block.append(`
+                <div class="support_all__blocks___item">
+                    <div class="support_all__blocks___item____img">
+                        <img src="admin/img/${element.img[0]}" alt="" />
+                    </div>
+                    <div class="support_all__blocks___item____text">
+                        <div class="support_all__blocks___item____text_____date">
+                            ${element.date}
+                        </div>
+                        <div class="support_all__blocks___item____text_____title">
+                            ${element.title}
+                        </div>
+                        <div class="support_all__blocks___item____text_____desc">
+                            ${element.subtitle}
+                        </div>
+                        <a href="openSupport.html?id_support=${element.id}" class="support_all__blocks___item____text_____button">
+                            Узнать больше
+                        </a>
+                    </div>
+                </div>
+            `);
+        }
+    });
+}
+
+getData("supports", "", "admin").then((response) => {
+    showSupports('Федеральная мера поддержки', 'support_all__blocks', response)
+    $(".regButton").click(function () {
+        showSupports('Региональная мера поддержки', 'support_all__blocks', response)
+
+        let screenWidth = window.innerWidth;
+        if (screenWidth <= 425) {
+            $(".activeButton").css("transform", "translate(146px)");
+        } else {
+            $(".activeButton").css("transform", "translate(243px)");
+        }
+
+        $(".activeButton").css("background", "linear-gradient(67deg, #B967C9 2.17%, rgba(0, 0, 0, 0.00) 114.97%), linear-gradient(0deg, rgba(0, 0, 0, 0.20) 0%, rgba(0, 0, 0, 0.20) 100%), #402C9B");
+
+        $(".support_top__right___gerbs img").eq(0).css("opacity", "0.3");
+        $(".support_top__right___gerbs img").eq(1).css("opacity", "1");
+
+        setTimeout(() => {
+            $(".regButton").css("color", "#fff");
+            $(".fedButton").css("color", "#000");
+        }, "100");
+
+        $(".support_top").css("background", "linear-gradient(67deg, #B967C9 2.17%, rgba(0, 0, 0, 0.00) 114.97%), #402C9B");
+
+        $(".support_top__left img").eq(0).attr("src", "img/mainImgSupport2_circle1.png")
+        $(".support_top__left img").eq(1).attr("src", "img/mainImgSupport2_circle2.png")
+        $(".rightCircle").attr("src", "img/mainImgSupport2_circle3.png")
+
+        $(".support_popular__blocks___item____tag").css("background", "#C88DC5")
+        $(".support_all__blocks___item____text_____date").css("color", "#733897")
+        $(".support_all__blocks___item____text_____button").css("background", "#733897")
+    })
+
+    $(".fedButton").click(function () {
+        showSupports('Федеральная мера поддержки', 'support_all__blocks', response)
+
+        let screenWidth = window.innerWidth;
+        if (screenWidth <= 425) {
+            $(".activeButton").css("transform", "translate(146px)");
+        } else {
+            $(".activeButton").css("transform", "translate(243px)");
+        }
+
+        $(".activeButton").css("transform", "translate(0px)");
+        $(".activeButton").css("background", "linear-gradient(249deg, #32AEDB -28.54%, rgba(0, 0, 0, 0.00) 93.07%), #402C9B");
+
+        $(".support_top__right___gerbs img").eq(0).css("opacity", "1");
+        $(".support_top__right___gerbs img").eq(1).css("opacity", "0.3");
+        setTimeout(() => {
+            $(".fedButton").css("color", "#fff");
+            $(".regButton").css("color", "#000");
+        }, "100");
+
+        $(".support_top").css("background", "linear-gradient(73deg, #2E78E7 2.36%, rgba(0, 0, 0, 0.00) 103.33%), #402C9B");
+
+        $(".support_top__left img").eq(0).attr("src", "img/mainImgSupport1_circle1.png")
+        $(".support_top__left img").eq(1).attr("src", "img/mainImgSupport1_circle2.png")
+        $(".rightCircle").attr("src", "img/mainImgSupport1_circle3.png")
+
+        $(".support_popular__blocks___item____tag").css("background", "#8692C3")
+        $(".support_all__blocks___item____text_____date").css("color", "#3D2A92")
+        $(".support_all__blocks___item____text_____button").css("background", "#3D2A92")
+    })
+});
+
+//Редактирование меры поддержки
+const url_supports = new URL(window.location.href);
+const queryParams_supports = url_service.searchParams;
+const id_support = queryParams_service.get("id_support");
+if (id_support) {
+    getData("supports", id_support, "admin").then((response) => {
+        $("#supports_find_support .new_block__title").text(response.title);
+        $("#supports_find_support #supportName").text(response.title);
+        $("#supports_find_support .new_block__desc").text(response.subtitle);
+        $("#supports_find_support .new_block__textDesc").html(JSON.parse(response.text).content);
+
+        for (let i = 0; i < response.img.length; i++) {
+            $("#supports_find_support .new_block__img").append(`
+                <img src="admin/img/${response.img[i]}" alt="" />
+            `);
+        }
+
+    });
 }
