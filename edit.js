@@ -530,10 +530,53 @@ function showSupports(tag, blockName, response) {
     });
 }
 
+function showPopularSupports(tag, blockName, response) {
+    let block = $(`.${blockName}`).empty();
+
+    response.forEach((element) => {
+        if (element.tags == tag && element.popular == 'Да') {
+            block.append(`
+                <div class="support_popular__blocks___item">
+                    <div class="support_popular__blocks___item____img">
+                        <img src="admin/img/${element.img[0]}" alt="" />
+                    </div>
+                    <div class="support_popular__blocks___item____tag">Популярно</div>
+                    <div class="support_popular__blocks___item____elems">
+                    <div class="support_popular__blocks___item____elems_____text">
+                        ${element.title}
+                    </div>
+                    <a href="openSupport.html?id_support=${element.id}" class="support_popular__blocks___item____elems_____button">
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="66"
+                            height="64"
+                            viewBox="0 0 66 64"
+                            fill="none"
+                        >
+                        <path
+                            d="M65 32C65 49.092 50.7023 63 33 63C15.2977 63 1 49.092 1 32C1 14.908 15.2977 1 33 1C50.7023 1 65 14.908 65 32Z"
+                            stroke="#8692C3"
+                            stroke-width="2"
+                        />
+                        <path
+                            d="M45.7071 32.7071C46.0976 32.3166 46.0976 31.6834 45.7071 31.2929L39.3431 24.9289C38.9526 24.5384 38.3195 24.5384 37.9289 24.9289C37.5384 25.3195 37.5384 25.9526 37.9289 26.3431L43.5858 32L37.9289 37.6569C37.5384 38.0474 37.5384 38.6805 37.9289 39.0711C38.3195 39.4616 38.9526 39.4616 39.3431 39.0711L45.7071 32.7071ZM20 33L45 33L45 31L20 31L20 33Z"
+                            fill="#8692C3"
+                        />
+                        </svg>
+                    </a>
+                    </div>
+                </div>
+            `);
+        }
+    });
+}
+
 getData("supports", "", "admin").then((response) => {
     showSupports('Федеральная мера поддержки', 'support_all__blocks', response)
     $(".regButton").click(function () {
-        showSupports('Региональная мера поддержки', 'support_all__blocks', response)
+        showSupports('Региональная мера поддержки', 'support_all__blocks', response);
+        showPopularSupports('Региональная мера поддержки', 'support_popular__blocks', response);
+
 
         let screenWidth = window.innerWidth;
         if (screenWidth <= 425) {
@@ -564,7 +607,8 @@ getData("supports", "", "admin").then((response) => {
     })
 
     $(".fedButton").click(function () {
-        showSupports('Федеральная мера поддержки', 'support_all__blocks', response)
+        showSupports('Федеральная мера поддержки', 'support_all__blocks', response);
+        showPopularSupports('Федеральная мера поддержки', 'support_popular__blocks', response);
 
         let screenWidth = window.innerWidth;
         if (screenWidth <= 425) {
@@ -614,3 +658,4 @@ if (id_support) {
 
     });
 }
+
