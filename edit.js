@@ -664,7 +664,6 @@ if (id_support) {
 
 // ---------------------------------------------------------
 
-
 //Выгрузка базы знаний в базу знаний
 getData("knowledgeBase", "", "admin").then((response) => {
     let block = $("#KB_All").empty();
@@ -715,6 +714,84 @@ if (id_KB) {
         }
 
         $("#KBs_find_KB .new_block__text").html(
+            JSON.parse(response.text).content
+        );
+    });
+}
+
+// ---------------------------------------------------------
+
+
+
+//Выгрузка базы знаний в базу знаний
+getData("vitrina", "", "admin").then((response) => {
+    let block = $("#vitrina_All").empty();
+    const maxCharacters = 100;
+
+    response.forEach((element) => {
+        block.append(`
+            <a href="openShowcases.html?id_vitrina=${element.id}" class="showcase_services__block">
+                <div class="showcase_services__block___imgs">
+                    <img src="admin/img/${element.img[0]}" alt="">
+                </div>
+
+                <div class="showcase_services__block___bottom">
+                    <div class="showcase_services__block___bottom____right">
+                        <div class="showcase_services__block___bottom____right_____title">
+                        ${element.title}
+                        </div>
+                        <div class="showcase_services__block___bottom____right_____place">
+                        ${element.person_city}
+                        </div>
+                    </div>
+                </div>
+            </a>
+        `);
+    });
+});
+
+//Редактирование базы знаний
+const url_vitrina = new URL(window.location.href);
+const queryParams_vitrina = url_vitrina.searchParams;
+const id_vitrina = queryParams_new.get("id_vitrina");
+if (id_vitrina) {
+    getData("vitrina", id_vitrina, "admin").then((response) => {
+        console.log(response);
+        
+        $("#vitrina_find_item .showcase_mainInfo__left___img").html(`
+            <img src="admin/img/${response.img[0]}" alt="" />
+        `);
+        $("#vitrina_find_item .showcase_mainInfo__right___title").text(response.title);
+        $("#vitrina_find_item .showcase_mainInfo__left___bottom____name").text(response.person_name);
+        $("#vitrina_find_item .showcase_mainInfo__right___place").text(response.person_city);
+        $(".vitrina #newName").text(response.title);
+        
+        $("#vitrina_find_item .showcase_mainInfo__left___bottom____phone").html(`
+            <svg xmlns="http://www.w3.org/2000/svg" width="17" height="18" viewBox="0 0 17 18" fill="none">
+                <path
+                d="M15.9348 18C6.86999 18.0136 -0.00968747 10.6419 1.02398e-05 1.12782C1.02398e-05 0.506503 0.475708 0 1.06251 0H3.86683C4.39337 0 4.84068 0.409646 4.918 0.96112C5.10331 2.28285 5.46675 3.56959 5.99727 4.78204L6.10645 5.03157C6.25826 5.37852 6.15536 5.79076 5.86147 6.01298C4.99301 6.66966 4.66111 7.9915 5.33768 9.0229C6.1867 10.3172 7.25693 11.4501 8.47904 12.3487C9.45309 13.0649 10.7013 12.7135 11.3215 11.7941C11.5315 11.4828 11.921 11.3737 12.2489 11.5346L12.4835 11.6496C13.6287 12.2113 14.844 12.5961 16.0924 12.7923C16.6133 12.8742 17 13.3478 17 13.9053V16.875C17 17.4963 16.5231 18 15.9363 18L15.9348 18Z"
+                fill="#787878" />
+            </svg>
+            ${response.person_number}
+        `);
+        $("#vitrina_find_item .showcase_mainInfo__left___bottom____email").html(`
+            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="17" viewBox="0 0 22 17" fill="none">
+                <path
+                d="M19.8 17H2.2C0.984973 17 0 16.0486 0 14.875V2.03256C0.0512692 0.895208 1.02139 -0.00107565 2.2 9.68906e-07H19.8C21.015 9.68906e-07 22 0.951397 22 2.125V14.875C22 16.0486 21.015 17 19.8 17ZM2.2 4.10975V14.875H19.8V4.10975L11 9.775L2.2 4.10975ZM3.08 2.125L11 7.225L18.92 2.125H3.08Z"
+                fill="#787878" />
+            </svg>
+            ${response.person_email}
+        `);
+
+        for (let i = 1; i < response.img.length; i++) {
+            $("#vitrina_find_item .showcase_mainInfo__right___photos").append(`
+                <div class="showcase_mainInfo__right___photos___img">
+                    <img src="admin/img/${response.img[i]}" alt="" />
+                </div>
+            `);
+        }
+
+        $("#vitrina_find_item .showcase_mainInfo__right___text").html(
             JSON.parse(response.text).content
         );
     });

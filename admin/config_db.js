@@ -246,5 +246,50 @@ export function schema() {
                 "required": true
             },
         },
+        "vitrina": {
+            "menuName": "Витрина предпринимателей",
+            "title": {
+                "name": "Название услуги",
+                "element": "input",
+                "type": "text",
+                "required": true
+            },
+            "person_name": {
+                "name": "ФИО",
+                "element": "input",
+                "type": "text",
+                "required": true
+            },            
+            "person_number": {
+                "name": "Номер телефона",
+                "element": "input",
+                "type": "text",
+                "required": true
+            },            
+            "person_email": {
+                "name": "Электронная почта",
+                "element": "input",
+                "type": "text",
+                "required": true
+            },            
+            "person_city": {
+                "name": "Город",
+                "element": "input",
+                "type": "text",
+                "required": true
+            },            
+            "text": {
+                "name": "Оказываемые услуги",
+                "element": "textarea",
+                "type": "text",
+                "required": true
+            },
+            "img": {
+                "name": "Картинки оказываемой услуги",
+                "element": "input",
+                "type": "file",
+                "required": true
+            },
+        }
     })
 }
