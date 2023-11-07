@@ -316,12 +316,12 @@ header {
     left: 0;
 }
 
-.supports_block__title svg {
+.supports_block svg {
     fill: var(--brown-light);
     transition: all .2s ease-in-out;
 }
 
-.supports_block__title:hover svg {
+.supports_block:hover svg {
     fill: var(--orange);
 }
 
