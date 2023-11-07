@@ -1,4 +1,4 @@
-@media (min-width: 320px) and (max-width: 425px) {
+@media (min-width: 320px) and (max-width: 1000px) {
     :root {
         --width: 100%;
     }
@@ -302,7 +302,7 @@
     }
 
     .new_block__title {
-        font-size: 24px;
+        font-size: 20px;
         width: 100%;
     }
 
@@ -968,5 +968,10 @@
     .support_all__search{
         margin-bottom: 20px;
         padding: 0 10px;
+    }
+
+    .new_block__img img{
+        height: auto;
+        width: 100%;
     }
 }

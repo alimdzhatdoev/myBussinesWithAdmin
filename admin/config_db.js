@@ -219,5 +219,32 @@ export function schema() {
                 "required": true
             },
         },
+        "knowledgeBase": {
+            "menuName": "База знаний",
+            "title": {
+                "name": "Заголовок базы знаний",
+                "element": "input",
+                "type": "text",
+                "required": true
+            },
+            "text": {
+                "name": "Текст базы знаний",
+                "element": "textarea",
+                "type": "text",
+                "required": true
+            },
+            "date": {
+                "name": "Дата загрузки базы знаний",
+                "element": "input",
+                "type": "date",
+                "required": true
+            },
+            "img": {
+                "name": "Картинки базы знаний",
+                "element": "input",
+                "type": "file",
+                "required": true
+            },
+        },
     })
 }

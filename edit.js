@@ -662,3 +662,60 @@ if (id_support) {
     });
 }
 
+// ---------------------------------------------------------
+
+
+//Выгрузка базы знаний в базу знаний
+getData("knowledgeBase", "", "admin").then((response) => {
+    let block = $("#KB_All").empty();
+    const maxCharacters = 100;
+
+    response.forEach((element) => {
+        block.append(`
+            <div class="events_block">
+                <div class="events_block__top">
+                    <img src="admin/img/${element.img[0]}" alt="" />
+                </div>
+                <div class="events_block__bottom">
+                <div class="events_block__bottom___line">
+                    <img src="img/forEvent.png" alt="" />
+                </div>
+                <div class="events_block__bottom___title">
+                    ${element.title.slice(0, maxCharacters)}...
+                </div>
+                <div class="events_block__bottom___dops">
+                    <div class="events_block__bottom___dops____date">${
+                      element.date
+                    }</div>
+                    <a href="show_base.html?id_KB=${
+                      element.id
+                    }" class="events_block__bottom___dops____readMore">
+                        Читать дальше >>
+                    </a>
+                </div>
+                </div>
+            </div>
+        `);
+    });
+});
+
+//Редактирование базы знаний
+const url_KB = new URL(window.location.href);
+const queryParams_KB = url_KB.searchParams;
+const id_KB = queryParams_new.get("id_KB");
+if (id_KB) {
+    getData("knowledgeBase", id_KB, "admin").then((response) => {
+        $("#KBs_find_KB .new_block__title").text(response.title);
+        $("#KBs_find_KB #newName").text(response.title);
+
+        for (let i = 0; i < response.img.length; i++) {
+            $("#KBs_find_KB .new_block__img").append(`
+                <img src="admin/img/${response.img[i]}" alt="" />
+            `);
+        }
+
+        $("#KBs_find_KB .new_block__text").html(
+            JSON.parse(response.text).content
+        );
+    });
+}
