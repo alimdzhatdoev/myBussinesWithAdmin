@@ -1,8 +1,7 @@
 let a = 1;
 
-// Добавьте обработчик клика на .header_left__menu
 $('.header_left__menu').click(function (event) {
-  event.stopPropagation(); // Предотвратим всплытие события до документа
+  event.stopPropagation();
   if (a == 1) {
     $('.header_left__menu').append(`
         <div class="header_left__menu___drop">
@@ -26,12 +25,49 @@ $('.header_left__menu').click(function (event) {
   }
 });
 
-// Добавьте обработчик клика на документ
 $(document).click(function (event) {
-  // Проверьте, был ли клик выполнен вне .header_left__menu
   if (!$(event.target).closest('.header_left__menu').length) {
-    // Закройте меню
     $('.header_left__menu___drop').remove();
     a = 1;
   }
+});
+
+// ------------------------------------------------------------------------------
+
+// Поиск
+
+function search(thisData, topBlockName, checkTitle){
+  let inputValue = thisData.val().toLowerCase();
+  let blocks = $(topBlockName);
+
+  let count = 0;
+  blocks.each(function (index, element) {
+    let blockText = $(element).find(checkTitle).text().toLowerCase(); 
+    if (blockText.includes(inputValue)) {
+      $(element).show();
+      count++;
+    } else {
+      $(element).hide();
+    }
+  });
+
+  if (count > 0) {
+    $('.filter__count').text(`Найдено: ${count}`);
+    $('.filter__count').css('width', '10%');
+    $('.filter__search').css('width', '90%');
+    $('.filter').css('gap', '20px');
+  } else {
+    $('.filter__count').text(`Ничего не найдено`);
+    $('.filter__count').css('width', '15%');
+    $('.filter__search').css('width', '85%');
+    $('.filter').css('gap', '0px');
+  }
+}
+
+$("#news_search").on('input', '.filter__search___input', function () {
+  search($(this), '.events_block', '.events_block__bottom___title');
+});
+
+$("#service_search").on('input', '.filter__search___input', function () {
+  search($(this), '.service_block', '.service_block__main___bottom____text');
 });
