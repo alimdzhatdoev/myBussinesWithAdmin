@@ -102,7 +102,6 @@ header {
     flex-shrink: 0;
     border-radius: 20px;
     background: var(--white);
-    z-index: 999;
     top: 53px;
     left: 0;
     display: none;
@@ -111,6 +110,7 @@ header {
     padding: 26px;
     transition: all .3s ease-in-out;
     box-shadow: 0 0 10px #00000030;
+    z-index: 4;
 }
 
 .header_left__menu___drop a:hover {
@@ -560,7 +560,6 @@ header {
     height: 100%;
     justify-content: space-between;
     position: relative;
-    z-index: 3;
     padding: 20px 40px;
 }
 
@@ -2996,4 +2995,8 @@ svg {
 
 .vitrina .new_block_hlebnye{
     width: var(--width);
+}
+
+.centerBLockPos{
+    align-items: center;
 }
