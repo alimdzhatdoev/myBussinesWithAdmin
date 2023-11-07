@@ -577,6 +577,7 @@ getData("supports", "", "admin").then((response) => {
         showSupports('Региональная мера поддержки', 'support_all__blocks', response);
         showPopularSupports('Региональная мера поддержки', 'support_popular__blocks', response);
 
+        $(".support_popular__title").text('Самые популярные региональные меры поддержки');
 
         let screenWidth = window.innerWidth;
         if (screenWidth <= 425) {
@@ -609,6 +610,8 @@ getData("supports", "", "admin").then((response) => {
     $(".fedButton").click(function () {
         showSupports('Федеральная мера поддержки', 'support_all__blocks', response);
         showPopularSupports('Федеральная мера поддержки', 'support_popular__blocks', response);
+
+        $(".support_popular__title").text('Самые популярные федеральные меры поддержки');
 
         let screenWidth = window.innerWidth;
         if (screenWidth <= 425) {
