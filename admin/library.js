@@ -95,7 +95,11 @@ export async function getData(fileName, id = "", folder = "") {
             }
           }
         } else {
-          resolve(data);
+          let mass = data;
+          mass.sort(function (a, b) {
+            return new Date(b.date) - new Date(a.date);
+          });
+          resolve(mass);
         }
       })
       .catch(error => {
@@ -531,7 +535,7 @@ export function makeData(idBlock) {
                           }
                         }
                       });
-                    } else 
+                    } else
                     if (subItem == 'popular') {
                       let str = "";
 
