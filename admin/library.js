@@ -341,6 +341,43 @@ export function makeData(idBlock) {
                 'transform': 'translateX(0px)'
               });
               $(".admin_info__message").text(`Запись успешно добавлена`);
+
+              const data = schema();
+
+              for (const category in data) {
+                if (category == idBlock) {
+                  for (const subItem in data[category]) {
+                    if (subItem != "menuName") {
+                      if (subItem == "tags") {
+                        $(".tags_admin__block").removeClass('active_tags_admin__block');
+                      }
+                      if (subItem == "tags_next") {
+                        $(".tags_next_admin__block").removeClass('active_tags_admin__block');
+                      }
+                      if (subItem == "popular") {
+                        $(".popular_admin__block").removeClass('active_tags_admin__block');
+                      }
+                      if (data[category][subItem].element == "input") {
+                        $(`#${category}_${subItem}`).val("");
+                        allMass = [];
+                      }
+                      if (data[category][subItem].element == "textarea") {
+                        //очистка редактора
+                        $(`#${category}_${subItem}`).val("");
+                        // initTextEditor(`${category}_${subItem}`);
+                        // let editorPromise = null;
+    
+                        const editorPromise1 = getTextEditor();
+                        editorPromise1.then(editor => {
+                          console.log(editor);
+                          editor.setData("");
+                        });
+                      }
+                    }
+                  }
+                }
+              }
+
               setTimeout(() => {
                 $(".admin_info__message").css({
                   'transform': 'translateX(400px)'
@@ -355,40 +392,6 @@ export function makeData(idBlock) {
               $(".downloadBlock").css("display", "none");
             });
 
-          const data = schema();
-
-          for (const category in data) {
-            if (category == idBlock) {
-              for (const subItem in data[category]) {
-                if (subItem != "menuName") {
-                  if (subItem == "tags") {
-                    $(".tags_admin__block").removeClass('active_tags_admin__block');
-                  }
-                  if (subItem == "tags_next") {
-                    $(".tags_next_admin__block").removeClass('active_tags_admin__block');
-                  }
-                  if (subItem == "popular") {
-                    $(".popular_admin__block").removeClass('active_tags_admin__block');
-                  }
-                  if (data[category][subItem].element == "input") {
-                    $(`#${category}_${subItem}`).val("");
-                    allMass = [];
-                  }
-                  if (data[category][subItem].element == "textarea") {
-                    //очистка редактора
-
-                    // initTextEditor(`${category}_${subItem}`);
-                    // let editorPromise = null;
-
-                    const editorPromise1 = getTextEditor();
-                    editorPromise1.then(editor => {
-                      editor.setData("");
-                    });
-                  }
-                }
-              }
-            }
-          }
 
         },
       )
