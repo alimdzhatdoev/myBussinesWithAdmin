@@ -1,6 +1,6 @@
 let a = 1;
 
-$('.header_left__menu').click(function (event) {
+$('body').on('click', '.header_left__menu', function (event) {
   event.stopPropagation();
   if (a == 1) {
     $('.header_left__menu').append(`
