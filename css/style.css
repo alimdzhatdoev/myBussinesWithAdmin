@@ -387,8 +387,8 @@ header {
 }
 
 .events_block__top img {
-    width: 100%;
-    /* height: 100%; */
+    /* width: 100%; */
+    height: 100%;
 }
 
 .events_block__bottom {

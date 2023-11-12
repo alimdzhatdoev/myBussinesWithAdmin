@@ -337,9 +337,22 @@ export function makeData(idBlock) {
               showData(idBlock);
               // alert("Запись сохранена");
               $(".downloadBlock").css("display", "none");
+              $(".admin_info__message").css({
+                'transform': 'translateX(0px)'
+              });
+              $(".admin_info__message").text(`Запись успешно добавлена`);
+              setTimeout(() => {
+                $(".admin_info__message").css({
+                  'transform': 'translateX(400px)'
+                });
+              }, 5000);
+              setTimeout(() => {
+                $(".admin_info__message").empty();
+              }, 6000);
             })
             .catch(error => {
               console.error('Ошибка:', error);
+              $(".downloadBlock").css("display", "none");
             });
 
           const data = schema();
@@ -362,7 +375,7 @@ export function makeData(idBlock) {
                     //очистка редактора
 
                     // initTextEditor(`${category}_${subItem}`);
-                    let editorPromise = null;
+                    // let editorPromise = null;
 
                     const editorPromise1 = getTextEditor();
                     editorPromise1.then(editor => {

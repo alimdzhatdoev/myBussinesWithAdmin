@@ -70,6 +70,20 @@ input[type="file"] {
     height: 100vh;
     overflow: hidden;
     overflow-y: scroll;
+    position: relative;
+}
+
+.admin_info__message{
+    position: absolute;
+    top: 20px;
+    right: 0px;
+    background-color: var(--item-message);
+    padding: 20px 40px;
+    color: var(--white);
+    font-size: 16px;
+    font-weight: 600;
+    transform: translateX(400px);
+    transition: all 0.5s ease-in-out;
 }
 
 .admin_menu__items {
@@ -179,7 +193,7 @@ input[type="file"] {
     margin-top: 10px;
 }
 
-.admin_info__item___form button:hover {
+.admin_info__item___form > button:hover {
     background-color: var(--active-item);
     color: var(--white);
 }
