@@ -363,13 +363,11 @@ export function makeData(idBlock) {
                       }
                       if (data[category][subItem].element == "textarea") {
                         //очистка редактора
-                        $(`#${category}_${subItem}`).val("");
                         // initTextEditor(`${category}_${subItem}`);
                         // let editorPromise = null;
     
                         const editorPromise1 = getTextEditor();
                         editorPromise1.then(editor => {
-                          console.log(editor);
                           editor.setData("");
                         });
                       }
