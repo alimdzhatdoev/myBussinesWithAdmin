@@ -75,10 +75,18 @@ export function schema() {
                 "required": true
             },
             "tags": {
-                "name": "Теги услуги",
+                "name": "Организационно правовая форма",
                 "element": "input",
                 "type": "text",
-                "data": ["Услуги", "Самозанятый", "ИП"],
+                "data": ["Физ. лица", "Самозанятый", "СМСП"],
+                "selectOne": false,
+                "required": true
+            },
+            "tags_next": {
+                "name": "Центры",
+                "element": "input",
+                "type": "text",
+                "data": ["ЦПП", "ЦПЭ", "ЦКССКПФ", "ЦИСС", "ЦМИТ"],
                 "selectOne": false,
                 "required": true
             },
@@ -191,11 +199,19 @@ export function schema() {
                 "required": true
             },
             "tags": {
-                "name": "Теги меры поддержки",
+                "name": "Тип мер поддержки",
                 "element": "input",
                 "type": "text",
                 "data": ["Региональная мера поддержки", "Федеральная мера поддержки"],
                 "selectOne": true,
+                "required": true
+            },
+            "tags_next": {
+                "name": "Теги меры поддержки",
+                "element": "input",
+                "type": "text",
+                "data": ["Самозанятому", "Предпринимателю", "Социальному предпринимателю", "Планирование бизнеса"],
+                "selectOne": false,
                 "required": true
             },
             'popular': {

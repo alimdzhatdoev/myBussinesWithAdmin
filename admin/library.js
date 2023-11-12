@@ -364,6 +364,9 @@ export function makeData(idBlock) {
                   if (subItem == "tags") {
                     $(".tags_admin__block").removeClass('active_tags_admin__block');
                   }
+                  if (subItem == "tags_next") {
+                    $(".tags_next_admin__block").removeClass('active_tags_admin__block');
+                  }
                   if (subItem == "popular") {
                     $(".popular_admin__block").removeClass('active_tags_admin__block');
                   }
@@ -545,6 +548,59 @@ export function makeData(idBlock) {
                             $(this).addClass('active_tags_admin__block');
                             allMass.push(thisData);
                             $(`.changeBlock_tags`).val(allMass.join(", "));
+                          }
+                        }
+                      });
+                    } else if (subItem == 'tags_next') {
+                      let str = "";
+
+                      let str_data = response[subItem].split(', ');
+
+                      data[category][subItem].data.forEach(element => {
+                        if (str_data.includes(element)) {
+                          str += `<div class="tags_next_admin__block active_tags_admin__block" data_tag="${element}">${element}</div>`
+                        } else {
+                          str += `<div class="tags_next_admin__block" data_tag="${element}">${element}</div>`
+                        }
+                      });
+
+                      $(".admin_info__changeElem___data").append(`
+                          <div class="admin_info__changeElem___data____header">${data[category][subItem].name}</div>
+                          <div class="tags_admin">
+                            ${str}
+                          </div>
+                          <input 
+                            type="${data[category][subItem].type}" 
+                            class="admin_info__changeElem___data____title changeBlock_${subItem}" 
+                            value="${response[subItem]}" />
+                      `);
+
+                      let allMass = [];
+
+                      allMass = str_data;
+
+                      $('.admin_info__changeElem___data').on('click', '.tags_next_admin__block', function () {
+                        let thisData = $(this).attr('data_tag');
+
+                        if (data[category].tags_next.selectOne == true) {
+                          $('.tags_next_admin__block').removeClass('active_tags_admin__block');
+                          $(this).addClass('active_tags_admin__block');
+
+                          $(`.changeBlock_${subItem}`).val($(this).attr('data_tag'));
+                        }
+
+                        if (data[category].tags_next.selectOne == false) {
+                          if (allMass.includes(thisData)) {
+                            $(this).removeClass('active_tags_admin__block');
+                            var index = allMass.indexOf(thisData);
+                            if (index !== -1) {
+                              allMass.splice(index, 1);
+                            }
+                            $(`.changeBlock_tags_next`).val(allMass.join(", "));
+                          } else {
+                            $(this).addClass('active_tags_admin__block');
+                            allMass.push(thisData);
+                            $(`.changeBlock_tags_next`).val(allMass.join(", "));
                           }
                         }
                       });
@@ -965,6 +1021,52 @@ export function createMenuTabs(schema) {
               }
             }
           });
+        } else if (subItem == "tags_next") {
+          let str = "";
+
+          data[category][subItem].data.forEach(element => {
+            str += `<div class="tags_next_admin__block" data_tag="${element}">${element}</div>`
+          });
+
+          $(`.admin_info__elem[data_info="${category}"] .admin_info__item___form`).append(`
+            <label>${data[category][subItem].name}</label>
+            <div class="tags_admin">
+              ${str}
+            </div>
+            <${data[category][subItem].element} 
+              type="${data[category][subItem].type}" 
+              multiple 
+              id="${category}_${subItem}" 
+              class="data_admin__elementsWrite" 
+            />
+          `)
+
+          let allMassServ = [];
+          $(`.${category}_show_block .admin_info__item___form`).on('click', `.tags_next_admin__block`, function () {
+            let thisData = $(this).attr('data_tag');
+
+            if (data[category].tags.selectOne == true) {
+              $('.tags_admin__block').removeClass('active_tags_admin__block');
+              $(this).addClass('active_tags_admin__block');
+
+              $(`#${category}_${subItem}`).val($(this).attr('data_tag'));
+            }
+
+            if (data[category].tags.selectOne == false) {
+              if (allMassServ.includes(thisData)) {
+                $(this).removeClass('active_tags_admin__block');
+                var index = allMassServ.indexOf(thisData);
+                if (index !== -1) {
+                  allMassServ.splice(index, 1);
+                }
+                $(`#${category}_${subItem}`).val(allMassServ.join(", "));
+              } else {
+                $(this).addClass('active_tags_admin__block');
+                allMassServ.push(thisData);
+                $(`#${category}_${subItem}`).val(allMassServ.join(", "));
+              }
+            }
+          });
         } else if (subItem == "popular") {
           let str = "";
 
@@ -1001,7 +1103,6 @@ export function createMenuTabs(schema) {
         `)
         }
       }
-
 
       $('#map_block_1').on('change', function () {
         let data1 = $(this).val();
